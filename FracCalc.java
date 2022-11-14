@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class FracCalc {
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
         Scanner scan = new Scanner(System.in);
@@ -11,7 +11,7 @@ public class FracCalc {
 
 
     }
-    
+
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
     // This function takes a String 'input' and produces the result
     //
@@ -21,20 +21,43 @@ public class FracCalc {
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input)
-    { 
+    {
         // TODO: Implement this function to produce the solution to the input
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
-            if (input.substring(i,i+1).equals(" ")) {
+            if (input.substring(i,i + 1).equals(" ")) {
                 count++;
             }
             if (count == 2) {
                 input = input.substring(i + 1);
             }
         }
-        return input;
+        String whole_fraction = "0";
+        String numerator = "0";
+        String denominator = "0";
+        int backslashes = 0;
+        int underscores = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.substring(i, i + 1).equals("_")) {
+                whole_fraction = input.substring(0 ,i);
+                numerator = input.substring(i + 1, input.indexOf("/"));
+                denominator = input.substring(input.indexOf("/") + 1);
+                underscores++;
+                i = input.length() - 1;
+            }
+            if (input.substring(i , i + 1).equals("/")) {
+                numerator = input.substring(0 , i);
+                denominator = input.substring(i + 1);
+                backslashes++;
+            }
+            if (underscores == 0 && backslashes == 0) {
+                whole_fraction = input;
+                denominator = "1";
+            }
+        }
+        return "whole fraction: " + whole_fraction + " numerator: " + numerator + " denominator: " + denominator;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
-    
+
 }
