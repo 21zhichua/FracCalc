@@ -17,7 +17,7 @@ public class FracCalc {
     //
     // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
     //      e.g. input ==> "1/2 + 3/4"
-    //        
+    //
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input)
@@ -39,23 +39,24 @@ public class FracCalc {
         int underscores = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i, i + 1).equals("_")) {
-                whole_fraction = input.substring(0 ,i);
+                whole_fraction = input.substring(0, i);
                 numerator = input.substring(i + 1, input.indexOf("/"));
                 denominator = input.substring(input.indexOf("/") + 1);
                 underscores++;
                 i = input.length() - 1;
             }
-            if (input.substring(i , i + 1).equals("/")) {
-                numerator = input.substring(0 , i);
+            if (input.substring(i, i + 1).equals("/")) {
+                numerator = input.substring(0, i);
                 denominator = input.substring(i + 1);
                 backslashes++;
             }
+        }
             if (underscores == 0 && backslashes == 0) {
                 whole_fraction = input;
                 denominator = "1";
             }
-        }
-        return "whole fraction: " + whole_fraction + " numerator: " + numerator + " denominator: " + denominator;
+
+        return "whole:" + whole_fraction + " numerator:" + numerator + " denominator:" + denominator;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
