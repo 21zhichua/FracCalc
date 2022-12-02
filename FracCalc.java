@@ -85,7 +85,7 @@ public class FracCalc {
         }
         return wholeFraction + "," + numerator  + "," + denominator;
     }
-    public static String computeFraction(String input, String returnValue) {
+    public static String calculateFraction(String input, String returnValue) {
         String firstWholeFrac;
         String firstNumerator;
         String firstDenominator;
@@ -130,12 +130,22 @@ public class FracCalc {
         return returnValue;
     }
 
+    public static String reduceFrac(String fraction) {
+        Scanner input = new Scanner(fraction);
+        input.useDelimiter("/");
+        String numer = input.next();
+        String denom = input.next();
+        if (Integer.parseInt(numer) % Integer.parseInt(denom) == 0) {
+            fraction = Integer.toString(Integer.parseInt(numer) / Integer.parseInt(denom));
+        }
+        return fraction;
+    }
 
     public static String produceAnswer(String input)
     {
         // TODO: Implement this function to produce the solution to the input
         String returnValue = "";
-        returnValue = computeFraction(input,returnValue);
+        returnValue = calculateFraction(input,returnValue);
         return returnValue;
     }
 
