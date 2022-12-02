@@ -60,35 +60,32 @@ public class FracCalc {
         return input;
     }
     public static String breakFraction(String input) {
-        // Separates equation into its constituent parts (first fraction, second fraction, operator)
         String wholeFraction = "0";
         String numerator = "0";
         String denominator = "0";
-        int backslashes = 0;
-        int underscores = 0;
-        // First if loop looks for underscores, the other looks for backslashes
+        int backslashCount = 0;
+        int underscoreCount = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i,i+1).equals("_")) {
-                wholeFraction = input.substring(0,i);
-                numerator = input.substring(i+1,input.indexOf("/"));
+                wholeFraction = input.substring(0,input.indexOf("_"));
+                numerator = input.substring(input.indexOf("_") + 1,input.indexOf("/"));
                 denominator = input.substring(input.indexOf("/") + 1);
-                underscores++;
-                i = input.length() - 1;
+                underscoreCount++;
             }
-            if (input.substring(i,i+1).equals("/") && underscores == 0) {
+            if (input.substring(i,i+1).equals("/") && underscoreCount == 0) {
                 numerator = input.substring(0,i);
                 denominator = input.substring(i+1);
-                backslashes++;
+                backslashCount++;
             }
         }
-        // If there are none of either, the denominator is one
-        if (underscores == 0 && backslashes == 0) {
+        if (underscoreCount == 0 && backslashCount == 0) {
             wholeFraction = input;
             denominator = "1";
         }
         if (Integer.parseInt(wholeFraction) < 0) {
             numerator = "-" + numerator;
         }
+
         return wholeFraction + "," + numerator  + "," + denominator;
     }
     public static String calculateFraction(String input) {
@@ -145,28 +142,28 @@ public class FracCalc {
         // Reduces a fraction into a simplified form
         Scanner input = new Scanner(fraction);
         input.useDelimiter("/");
-        String numerator = input.next();
-        String denominator = input.next();
-        System.out.println(Integer.parseInt(denominator));
-        for (int i = 2; i <= Math.abs(Integer.parseInt(denominator)); i++) {
-            if (Integer.parseInt(numerator) % i == 0 && Integer.parseInt(denominator) % i == 0) {
-                numerator = Integer.toString(Integer.parseInt(numerator)/i);
-                denominator = Integer.toString(Integer.parseInt(denominator)/i);
+        String nume = input.next();
+        String deno = input.next();
+        System.out.println(Integer.parseInt(deno));
+        for (int i = 2; i <= Math.abs(Integer.parseInt(deno)); i++) {
+            if (Integer.parseInt(nume) % i == 0 && Integer.parseInt(deno) % i == 0) {
+                nume = Integer.toString(Integer.parseInt(nume)/i);
+                deno = Integer.toString(Integer.parseInt(deno)/i);
                 i = 1;
             }
         }
-        if (Integer.parseInt(numerator) % Integer.parseInt(denominator) == 0) {
-            fraction = Integer.toString(Integer.parseInt(numerator) / Integer.parseInt(denominator));
-        } else if (Integer.parseInt(numerator)/Integer.parseInt(denominator) == 0) {
-            if (Integer.parseInt(denominator) < 0) {
-                fraction = Integer.toString(Integer.parseInt(numerator) * -1) + "/" + Math.abs(Integer.parseInt(denominator));
+        if (Integer.parseInt(nume) % Integer.parseInt(deno) == 0) {
+            fraction = Integer.toString(Integer.parseInt(nume) / Integer.parseInt(deno));
+        } else if (Integer.parseInt(nume)/Integer.parseInt(deno) == 0) {
+            if (Integer.parseInt(deno) < 0) {
+                fraction = Integer.toString(Integer.parseInt(nume) * -1) + "/" + Math.abs(Integer.parseInt(deno));
             } else {
-                fraction = numerator + "/" + Math.abs(Integer.parseInt(denominator));
+                fraction = nume + "/" + Math.abs(Integer.parseInt(deno));
             }
         } else {
-            String newWhole = Integer.toString(Integer.parseInt(numerator)/Integer.parseInt(denominator));
-            String newNum = Integer.toString(Integer.parseInt(numerator) % Integer.parseInt(denominator));
-            fraction = newWhole + "_" + Math.abs(Integer.parseInt(newNum)) + "/" + Math.abs(Integer.parseInt(denominator));
+            String newWhole = Integer.toString(Integer.parseInt(nume)/Integer.parseInt(deno));
+            String newNumerator = Integer.toString(Integer.parseInt(nume) % Integer.parseInt(deno));
+            fraction = newWhole + "_" + Math.abs(Integer.parseInt(newNumerator)) + "/" + Math.abs(Integer.parseInt(deno));
         }
         return fraction;
     }
