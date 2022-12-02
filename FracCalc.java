@@ -142,22 +142,42 @@ public class FracCalc {
     }
 
     public static String reduceFraction(String fraction) {
-        // Reduces the fraction (preferably into clean integers)
+        // Reduces a fraction into a simplified form
         Scanner input = new Scanner(fraction);
         input.useDelimiter("/");
-        String numer = input.next();
-        String denom = input.next();
-        if (Integer.parseInt(numer) % Integer.parseInt(denom) == 0) {
-            fraction = Integer.toString(Integer.parseInt(numer) / Integer.parseInt(denom));
+        String numerator = input.next();
+        String denominator = input.next();
+        System.out.println(Integer.parseInt(denominator));
+        for (int i = 2; i <= Math.abs(Integer.parseInt(denominator)); i++) {
+            if (Integer.parseInt(numerator) % i == 0 && Integer.parseInt(denominator) % i == 0) {
+                numerator = Integer.toString(Integer.parseInt(numerator)/i);
+                denominator = Integer.toString(Integer.parseInt(denominator)/i);
+                i = 1;
+            }
+        }
+        if (Integer.parseInt(numerator) % Integer.parseInt(denominator) == 0) {
+            fraction = Integer.toString(Integer.parseInt(numerator) / Integer.parseInt(denominator));
+        } else if (Integer.parseInt(numerator)/Integer.parseInt(denominator) == 0) {
+            if (Integer.parseInt(denominator) < 0) {
+                fraction = Integer.toString(Integer.parseInt(numerator) * -1) + "/" + Math.abs(Integer.parseInt(denominator));
+            } else {
+                fraction = numerator + "/" + Math.abs(Integer.parseInt(denominator));
+            }
+        } else {
+            String newWhole = Integer.toString(Integer.parseInt(numerator)/Integer.parseInt(denominator));
+            String newNum = Integer.toString(Integer.parseInt(numerator) % Integer.parseInt(denominator));
+            fraction = newWhole + "_" + Math.abs(Integer.parseInt(newNum)) + "/" + Math.abs(Integer.parseInt(denominator));
         }
         return fraction;
     }
 
     public static String produceAnswer(String input)
     {
+        // Returns simplified answer form of equation
         // TODO: Implement this function to produce the solution to the input
         String returnValue = "";
         returnValue = calculateFraction(input);
+        returnValue = reduceFraction(returnValue);
         return returnValue;
     }
 
