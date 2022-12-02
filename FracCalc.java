@@ -21,6 +21,7 @@ public class FracCalc {
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     public static String firstFraction(String input) {
+        // Finds the first fraction in an equation
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i,i+1).equals(" ")) {
@@ -33,6 +34,7 @@ public class FracCalc {
         return input;
     }
     public static String secondFraction(String input) {
+        // Finds the second fraction in an equation
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i,i+1).equals(" ")) {
@@ -45,6 +47,7 @@ public class FracCalc {
         return input;
     }
     public static String returnOperator(String input) {
+        // Finds the operator (+,-,*,/)
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i,i+1).equals(" ")) {
@@ -57,11 +60,13 @@ public class FracCalc {
         return input;
     }
     public static String breakFraction(String input) {
+        // Separates equation into its constituent parts (first fraction, second fraction, operator)
         String wholeFraction = "0";
         String numerator = "0";
         String denominator = "0";
         int backslashes = 0;
         int underscores = 0;
+        // First if loop looks for underscores, the other looks for backslashes
         for (int i = 0; i < input.length(); i++) {
             if (input.substring(i,i+1).equals("_")) {
                 wholeFraction = input.substring(0,i);
@@ -76,6 +81,7 @@ public class FracCalc {
                 backslashes++;
             }
         }
+        // If there are none of either, the denominator is one
         if (underscores == 0 && backslashes == 0) {
             wholeFraction = input;
             denominator = "1";
@@ -85,28 +91,33 @@ public class FracCalc {
         }
         return wholeFraction + "," + numerator  + "," + denominator;
     }
-    public static String calculateFraction(String input, String returnValue) {
-        String firstWholeFrac;
+    public static String calculateFraction(String input) {
+        // Calculates the answer from given values
+        String returnValue = "";
+        String firstWholeFraction;
         String firstNumerator;
         String firstDenominator;
-        String secondWholeFrac;
+        String secondWholeFraction;
         String secondNumerator;
         String secondDenominator;
+        // Breaks first fraction and gets independent values
         String firstFraction = breakFraction(firstFraction(input));
         Scanner scan = new Scanner(firstFraction);
         scan.useDelimiter(",");
-        firstWholeFrac = scan.next();
+        firstWholeFraction = scan.next();
         firstNumerator = scan.next();
         firstDenominator = scan.next();
-        String secondFrac = breakFraction(secondFraction(input));
-        scan = new Scanner(secondFrac);
+        // Breaks second fraction and gets independent values
+        String secondFraction = breakFraction(secondFraction(input));
+        scan = new Scanner(secondFraction);
         scan.useDelimiter(",");
-        secondWholeFrac = scan.next();
+        secondWholeFraction = scan.next();
         secondNumerator = scan.next();
         secondDenominator = scan.next();
+        // Finds appropriate operator to determine return value (operator is used to add numerators)
         String operator = returnOperator(input);
-        firstNumerator = Integer.toString(Integer.parseInt(firstNumerator) + (Integer.parseInt(firstWholeFrac)*Integer.parseInt(firstDenominator)));
-        secondNumerator = Integer.toString(Integer.parseInt(secondNumerator) + (Integer.parseInt(secondWholeFrac)*Integer.parseInt(secondDenominator)));
+        firstNumerator = Integer.toString(Integer.parseInt(firstNumerator) + (Integer.parseInt(firstWholeFraction)*Integer.parseInt(firstDenominator)));
+        secondNumerator = Integer.toString(Integer.parseInt(secondNumerator) + (Integer.parseInt(secondWholeFraction)*Integer.parseInt(secondDenominator)));
 
         firstNumerator = Integer.toString(Integer.parseInt(firstNumerator)*Integer.parseInt(secondDenominator));
         secondNumerator = Integer.toString(Integer.parseInt(secondNumerator)*Integer.parseInt(firstDenominator));
@@ -130,7 +141,8 @@ public class FracCalc {
         return returnValue;
     }
 
-    public static String reduceFrac(String fraction) {
+    public static String reduceFraction(String fraction) {
+        // Reduces the fraction (preferably into clean integers)
         Scanner input = new Scanner(fraction);
         input.useDelimiter("/");
         String numer = input.next();
@@ -145,7 +157,7 @@ public class FracCalc {
     {
         // TODO: Implement this function to produce the solution to the input
         String returnValue = "";
-        returnValue = calculateFraction(input,returnValue);
+        returnValue = calculateFraction(input);
         return returnValue;
     }
 
